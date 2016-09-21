@@ -17,6 +17,8 @@ public enum DatarefType: String {
     case floatarray = "fa"
     case base64 = "b"
     case unknown = ""
+    
+    static let allValues = [int, float, double, intarray, floatarray, base64]
 }
 
 public class Dataref: Hashable {
@@ -58,7 +60,7 @@ public enum DatarefValidationError: Error {
 }
 
 extension String {
-    fileprivate func validateDataref() throws {
+    internal func validateDataref() throws {
         // Allow letters
         var validCharacters = CharacterSet.letters
         // And numbers

@@ -14,6 +14,8 @@
 		2F5623141D92E0EC00A7B593 /* DatarefManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5623121D92E0EC00A7B593 /* DatarefManager.swift */; };
 		2F56231E1D92E12D00A7B593 /* Dataref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5623111D92E0EC00A7B593 /* Dataref.swift */; };
 		2F56231F1D92E12D00A7B593 /* DatarefManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5623121D92E0EC00A7B593 /* DatarefManager.swift */; };
+		2FFB06261D931D7A00A03313 /* ExtPlaneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB06241D93159300A03313 /* ExtPlaneProtocol.swift */; };
+		2FFB06271D931D7A00A03313 /* ExtPlaneProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB06241D93159300A03313 /* ExtPlaneProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,7 @@
 		2F5623111D92E0EC00A7B593 /* Dataref.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dataref.swift; sourceTree = "<group>"; };
 		2F5623121D92E0EC00A7B593 /* DatarefManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatarefManager.swift; sourceTree = "<group>"; };
 		2F56231C1D92E10F00A7B593 /* ExtPlaneSockets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExtPlaneSockets.framework; path = "../../../../Library/Developer/Xcode/DerivedData/IXEG_737_Pedestal-cekdhjyodoqukkbmhivyoagdsiqb/Build/Products/Debug-iphonesimulator/ExtPlaneSockets.framework"; sourceTree = "<group>"; };
+		2FFB06241D93159300A03313 /* ExtPlaneProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtPlaneProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +84,8 @@
 			children = (
 				2F5623111D92E0EC00A7B593 /* Dataref.swift */,
 				2F5623121D92E0EC00A7B593 /* DatarefManager.swift */,
-				2F5622F11D92E0E300A7B593 /* Datarefs.h */,
-				2F5622F21D92E0E300A7B593 /* Info.plist */,
+				2FFB06241D93159300A03313 /* ExtPlaneProtocol.swift */,
+				2FFB06281D931D8300A03313 /* Supporting Files */,
 			);
 			path = Datarefs;
 			sourceTree = "<group>";
@@ -102,6 +105,15 @@
 				2F56231C1D92E10F00A7B593 /* ExtPlaneSockets.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2FFB06281D931D8300A03313 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2F5622F11D92E0E300A7B593 /* Datarefs.h */,
+				2F5622F21D92E0E300A7B593 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FFB06271D931D7A00A03313 /* ExtPlaneProtocol.swift in Sources */,
 				2F5623131D92E0EC00A7B593 /* Dataref.swift in Sources */,
 				2F5623141D92E0EC00A7B593 /* DatarefManager.swift in Sources */,
 			);
@@ -225,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FFB06261D931D7A00A03313 /* ExtPlaneProtocol.swift in Sources */,
 				2F5622FD1D92E0E300A7B593 /* DatarefsTests.swift in Sources */,
 				2F56231F1D92E12D00A7B593 /* DatarefManager.swift in Sources */,
 				2F56231E1D92E12D00A7B593 /* Dataref.swift in Sources */,
