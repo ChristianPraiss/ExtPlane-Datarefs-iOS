@@ -16,7 +16,7 @@ public enum DatarefType: String {
     case intarray = "ia"
     case floatarray = "fa"
     case base64 = "b"
-    case unknown = ""
+    case unknown
     
     static let allValues = [int, float, double, intarray, floatarray, base64]
 }

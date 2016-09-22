@@ -108,6 +108,7 @@ struct ExtPlaneProtocol {
         case unknownPrefix
         case commandMissingParts
         case unknownValueType
+        case invalidValue
     }
     
     enum Output {
@@ -119,28 +120,75 @@ struct ExtPlaneProtocol {
             if string == ExtPlaneOutputIdentifier.connected {
                 return .connected
             } else if string.hasPrefix(ExtPlaneOutputIdentifier.valueChanged) {
-                var valueString = string.substring(from: string.index(string.startIndex, offsetBy: 1))
-                var returnType: DatarefType = .unknown
+                var inputString = string.substring(from: string.index(string.startIndex, offsetBy: 1))
+                var valueType: DatarefType = .unknown
                 for type in DatarefType.allValues {
-                    if valueString.hasPrefix(type.rawValue) {
-                        valueString = valueString.substring(from: string.index(string.startIndex, offsetBy: type.rawValue.distance(from: type.rawValue.startIndex, to: type.rawValue.endIndex)))
-                        returnType = type
+                    if inputString.hasPrefix(type.rawValue) {
+                        inputString = inputString.substring(from: string.index(string.startIndex, offsetBy: type.rawValue.distance(from: type.rawValue.startIndex, to: type.rawValue.endIndex)))
+                        valueType = type
                     }
                 }
                 
-                guard returnType != .unknown else {
+                guard valueType != .unknown else {
                     throw OutputValidationError.unknownValueType
                 }
                 
-                let parts = valueString.components(separatedBy: " ")
-                guard parts.count == 2 else {
+                let parts = inputString.components(separatedBy: " ")
+                guard parts.count == 3 else {
                     throw OutputValidationError.commandMissingParts
                 }
                 
                 // Throws if invalid
-                try parts[0] .validateDataref()
+                let datarefIdentifier = parts[0]
+                let dataRef = try Dataref(identifier: datarefIdentifier, type: valueType)
                 
+                var valueString = parts[1]
                 
+                switch valueType {
+                case .base64:
+                    guard let base64Data = Data(base64Encoded: valueString) else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    return .newValue(dataref: dataRef, value: base64Data)
+                case .double:
+                    guard let doubleValue = Double(valueString) else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    return .newValue(dataref: dataRef, value: doubleValue)
+                case .float:
+                    guard let floatValue = Float(valueString) else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    return .newValue(dataref: dataRef, value: floatValue)
+                case .int:
+                    guard let intValue = Int(valueString) else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    return .newValue(dataref: dataRef, value: intValue)
+                case .floatarray:
+                    guard valueString.hasPrefix("[") && valueString.hasSuffix("]") else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    valueString = valueString.substring(with: valueString.index(valueString.startIndex, offsetBy: 1)..<valueString.index(valueString.endIndex, offsetBy: -1))
+                    valueString = valueString.trimmingCharacters(in: CharacterSet.whitespaces)
+                    let values = valueString.components(separatedBy: ",").map({ (value) -> Float? in
+                        return Float(value)
+                    }).flatMap({ return $0 })
+                    
+                    return .newValue(dataref: dataRef, value: values)
+                case .intarray:
+                    guard valueString.hasPrefix("[") && valueString.hasSuffix("]") else {
+                        throw OutputValidationError.invalidValue
+                    }
+                    valueString = valueString.substring(with: valueString.index(valueString.startIndex, offsetBy: 1)..<valueString.index(valueString.endIndex, offsetBy: -1))
+                    valueString = valueString.trimmingCharacters(in: CharacterSet.whitespaces)
+                    let values = valueString.components(separatedBy: ",").map({ (value) -> Int? in
+                        return Int(value)
+                    }).flatMap({ return $0 })
+                    
+                    return .newValue(dataref: dataRef, value: values)
+                default: break;
+                }
             }
             
             throw OutputValidationError.unknownPrefix
