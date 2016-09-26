@@ -105,8 +105,8 @@ public class DatarefManager {
     }
     
     private func _onRead(data: Data) {
-        guard let string = String(data: data, encoding: String.Encoding.utf8) {
-            
+        guard let string = String(data: data, encoding: String.Encoding.utf8) else {
+            return
         }
     }
     
