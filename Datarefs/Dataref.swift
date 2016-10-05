@@ -18,6 +18,7 @@ public enum DatarefType: String {
     case base64 = "b"
     case unknown
     
+    /// A list of all possible **DatarefType**s
     static let allValues = [int, float, double, intarray, floatarray, base64]
 }
 
@@ -40,10 +41,12 @@ public class Dataref: Hashable {
         self.accuracy = accuracy
     }
     
+    /// Compares two **Dataref**s
     public static func ==(lhs: Dataref, rhs: Dataref) -> Bool {
         return lhs.identifier == rhs.identifier && lhs.type == rhs.type
     }
 
+    /// Returns the hashValue of a **Dataref**
     public var hashValue: Int {
         return self.identifier.hashValue ^ self.type.hashValue
     }
@@ -60,6 +63,8 @@ public enum DatarefValidationError: Error {
 }
 
 extension String {
+    
+    /// Throws a **DatarefValidationError** if the **String** is not a valid Dataref
     internal func validateDataref() throws {
         // Allow letters
         var validCharacters = CharacterSet.letters

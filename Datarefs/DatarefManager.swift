@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+/// An adapter to perform Network Communication as requested by the DatarefManager
 public protocol DatarefManagerAdapter: class {
     /**
      Asks the **DatarefManagerAdapter** to send a command over the network
@@ -99,21 +101,41 @@ public class DatarefManager {
     private var datarefBeingRegistered: Dataref?
     
     
+    /* 
+     This method registers a new **Dataref** with ExtPlane over the network
+     
+     -parameter dataref: The **Dataref** to register
+    */
     private func _register(dataref: Dataref) {
         let command = ExtPlaneProtocol.Command.sub(dataref: dataref)
         adapter.send(data: command.toString().data(using: String.Encoding.utf8)!)
     }
     
+    /*
+     This method is invoked when a **DatarefManagerAdapter** emits an incoming data event
+     
+     -parameter data: A **Data** object emitted by the **DatarefManagerAdapter**
+     */
     private func _onRead(data: Data) {
         guard let string = String(data: data, encoding: String.Encoding.utf8) else {
             return
         }
     }
     
+    
+    /**
+     This method is invoked when a **DatarefManagerAdapter** emits a connection event
+     */
     private func _onConnection() {
         
     }
     
+    
+    /** 
+     This method is invoked when a **DatarefManagerAdapter** emits an error event
+     
+     - parameter error: An **Error** object emitted by the **DatarefManagerAdapter**
+    */
     private func _onError(error: Error?) {
         
     }
